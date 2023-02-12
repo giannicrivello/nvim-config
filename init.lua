@@ -12,7 +12,14 @@ require('packer').startup(function()
 	use {'dracula/vim', as = 'dracula'}
 	use 'preservim/nerdtree'
 
+	use {
+		"windwp/nvim-autopairs",
+		config = function() require("nvim-autopairs").setup() end
+	}
+
 end)
+
+require("nvim-autopairs").setup()
 
 require'nvim-treesitter.configs'.setup {
   -- Install parsers synchronously (only applied to `ensure_installed`)
@@ -69,6 +76,11 @@ local opts = { noremap = true }
 local function nkeymap(key, map)
 	keymap('n', key, map, opts)
 end
+nkeymap('rn', '<cmd>lua vim.lsp.buf.rename()<cr>')
+nkeymap('I', '<cmd>lua vim.lsp.buf.implementation()<cr>')
+nkeymap('H', '<cmd>lua vim.lsp.buf.hover()<cr>')
+
 nkeymap('<c-l>', ':set relativenumber<cr>')
+nkeymap('<c-q>', ':set tabstop=2')
 nkeymap('<c-e>', ':NERDTreeToggle<cr>')
 
